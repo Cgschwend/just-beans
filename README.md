@@ -24,14 +24,14 @@ This simple console calculator provides basic functionality.  The user may enter
 
 * 'recall'  to display the last answer from history
 
-* 'print'  to display a list of all calculator computations and commands made in the current calculator session.
+* 'print'  to display a list of all calculator computations and commands made in the current calculator session
 
-* 'off'  to power the calculator off.  Resets all calculator memory by ending the current calculator session.
+* 'off'  to power the calculator off.  Resets all calculator session memory by ending the current calculator session
 
 If the user requests an operation, they will be prompted to enter the required numeric operand(s).  'Pi' may be entered as a 
 valid numeric.
 
-Console Calculator will allow upto 5 invalid entries before powering itself off.
+Console Calculator will allow up to 5 invalid entries before powering itself off.
 
 ### Design Elements
 
