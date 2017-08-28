@@ -48,5 +48,3 @@ The Command abstract class performs the simple calculator commands.
 
 The View class inherits from Request class.  Currently, Session class does not inherit from Request but can, and may in future versions.
 
-
-
