@@ -3,14 +3,8 @@
 	 * 	  			The View is used by the Controller to build a Session to store on the sessionStack. 
 	 * 
 	 * Collection of method to manage the view attributes.  
-	 * Extends Request class.
-	 * 						
-	 * TODO Next Version: Make 4 child classes of View.  ViewIsError, ViewIsCommand, ViewIsUnary, ViewIsBinary
+	 * Extends Request class.	  						
 	 * 	   
-	 * @param type	representing the type of request the user has given. 
-	 * @param operator	user entered operator 
-	 * @param operand1	user entered operand1 
-	 * @param operand2	user entered operand2
 	 * 
 	 * ***********************************************************************************************************************
 	 */
@@ -19,69 +13,59 @@ public class View extends Request {
 	private String type;
 	private String operator;
 	private String operand1;
-	private String operand2;
-
-	
+	private String operand2;	
+	/**  ************************************************************************************************************************  
+	 * View() - default constructor.		 																					 * 						   							 
+	 * **************************************************************************************************************************
+	 */
+	// default constructor
+	public View () {			
+	}
+	/**  ***********************************************************************************************************************
+	 * View(String type, String operator, String operand1, String operand2) - Binary View constructor.				   
+	 * @param type indicates the type of session being created.
+	 * @param operator represents a calculator command.
+	 * @param operand1 value to be used in computation.
+	 * @param operand2 value to be used in computation.
+	 * *************************************************************************************************************************
+	 */	
 	// object constructor 
-	/*
-		public View (String type, String operator, String operand1, String operand2) {
-			setType(type);
-			setOperator(operator);
+	public View (String type, String operator, String operand1, String operand2) {
+			super(type, operator);
 			setOperand1(operand1);
 			setOperand2(operand2);
-		}
-	*/
-		//  default constructor
-			public View () {
-			
-		}
-		// object constructor 
-			public View (String type, String operator, String operand1, String operand2) {
-					super(type, operator);
-					setOperand1(operand1);
-					setOperand2(operand2);
-				}
-
+	}
+	/**  ***********************************************************************************************************************
+	 * setOperand1(String operand1) - Sets this.operand1 to the value of operand1 passed in as a parameter.  	 				* 		   
+	 * @param operand1 to be used in computation.  	 																		* 
+	 * *************************************************************************************************************************
+	 */
 	public void setOperand1(String operand1) {
-		this.operand1 = operand1;
-		//System.out.println("setting operand1: " + operand1);
-		
+		this.operand1 = operand1;		
 	}
-	
+	/**  ***********************************************************************************************************************
+	 * getOperand1() - Returns the current value of 'operand1'. 																* 		   
+	 * @return operand1  																									* 
+	 * *************************************************************************************************************************
+	 */	
 	public String getOperand1() {
-			return this.operand1;
-		
+			return this.operand1;	
 	}
-	
+	/**  ***********************************************************************************************************************
+	 * setOperand2(String operand2) - Sets this.operand2 to the value of operand2 passed in as a parameter.  	 				* 		   
+	 * @param operand2 to be used in computation.  	 																		* 
+	 * *************************************************************************************************************************
+	 */		
 	public void setOperand2(String operand2) {
-		this.operand2 = operand2;
-		//System.out.println("setting operand2: " + operand2);
-		
+		this.operand2 = operand2;		
 	}
-	
+	/**  ***********************************************************************************************************************
+	 * getOperand2() - Returns the current value of 'operand2'. 																* 		   
+	 * @return operand2  																									* 
+	 * *************************************************************************************************************************
+	 */		
 	public String getOperand2() {
-			return this.operand2;
-		
-	}
-		
-	//public void setOperator(String operator) {
-	//		this.operator = operator;
-	//		System.out.println("View: setting operator " + operator);
-			
-	//	}
+			return this.operand2;	
+	}		
 
-	//public String getOperator() {
-	//	return this.operator;
-		
-	//}
-	
-	//public void setType(String type) {
-	//	this.type = type;
-		
-	//}
-	
-	//String getType() {
-	//	return this.type;
-		
-	//}
 }
