@@ -15,9 +15,10 @@
 	 * 						save - saves the last answer to memory
 	 * 	  				 	recall - displays the most recently saved answer
 	 * 	  				 	print - prints a log of the commands and requests with calculated answers the user entered
+	 * 						help - displays the initial calculator usage message again
 	 * 	 				 	off - turns the console calculator off
 	 * 
-	 * 					Valid operators: 						Input Pattern:	 Calculation Patter:
+	 * 					Valid operators: 						Input Pattern:	 Calculation Pattern:
 	 * 						+ : addition between two numbers.  		+ A B  	 -> 		A + B
 	 * 						- : subtraction of two numbers			- A B  	 -> 		A - B
 	 * 						* : multiplication of two numbers		* N N  	 -> 		N * N
@@ -27,7 +28,7 @@
 	 * 					  log : log of a number						log N
 	 * 
 	 * 					Will allow for 5 invalid entry attempts.  After 5 attempts, view.type will be set to 'E' for error and
-	 * 					scanning will stop. 
+	 * 					scanning for user entry will stop, and the calculator will power down. 
 	 * 
 	 * @author Carol Gschwend
 	 * @datecreated 08/26/2017
@@ -46,9 +47,10 @@ public class ConsoleCalculatorController {
 
 	public static void main(String[] args) {
 	
-		GenericStack<Session> sessionStack = new GenericStack<Session>();
-		GenericStack<Double> memoryStack = new GenericStack<Double>();
-	
+		GenericStack<Session> sessionStack = new GenericStack<Session>();							// print operation stack
+		GenericStack<Double> memoryStack = new GenericStack<Double>();							// save/recall operation stack
+		
+		
 	    boolean isPowerOn = true;																// isPowerOn switch for control flow.
 		reader = new Scanner(System.in);  														// Scanner for console user input. 
 	    									
@@ -57,7 +59,6 @@ public class ConsoleCalculatorController {
 			showPromptView("");																	// Display calculator prompt.
 			View view = getUserInput();															// Get user input in a view.
 			
-			//System.out.println("view: " + view.toString());
 			
 			if (view.getType() == "C") {															// User entered a Command.
 				Command.operation(view.getOperator(),sessionStack,memoryStack);					// Execute the command.
@@ -110,14 +111,14 @@ public class ConsoleCalculatorController {
 		  } //end while																			// End (while IsPowerOn) loop.
 		  
 		  System.out.println("Console Calculator off.");											// Display Calculator off message.
-		  reader.close();
+		  reader.close();																		// Close the scanner.
 		} // end main																			// End main.
 	
 	
 	/**  ***********************************************************************************************************************
 	 * getUserInput() - 	Read user entered input from the console via the scanner. Only allow for valid commands or operators:
 	 * 
-	 * 					commands: save, print, recall, off
+	 * 					commands: save, print, recall, help, off
 	 * 					operators: +, -, *, /, ^, sqrt, log
 	 * 
 	 * 					Will allow for 5 invalid entry attempts.  After 5 attempts, view.type will be set to 'E' for error and
@@ -135,14 +136,13 @@ public class ConsoleCalculatorController {
 		String tempType = "";
 		String msg = "";
 		int MaxTries = 5;																		// Maximum number of invalid user entries.
-		String validEntries = "Valid commands or operations: print, save, recall, off, +, -, *, /, ^, %, sqrt, log.";
+		String validEntries = "Valid commands or operations: print, save, recall, help, off, +, -, *, /, ^, %, sqrt, log.";
 		
 	while ((invalidEntryCounter <= MaxTries) && (isValidEntry==false)) {							// Let user try to enter properly 
 																								// up to MaxTries times.
 		try {
 			
 			token = reader.nextLine(); 															// Get user input from scanner.							
-			//System.out.println("attempt # : " + invalidEntryCounter);
             
             }
            		
@@ -150,7 +150,7 @@ public class ConsoleCalculatorController {
             {																					// invalid entry attempts.
                 System.err.println("Incorrect entry.");											// Display error message.
                 invalidEntryCounter ++;															// Count as an invalid entry attempt.
-                token = reader.nextLine();														// Give user another try.  ???
+                token = reader.nextLine();														// Give user another try.
             }
 	
 			
@@ -168,21 +168,19 @@ public class ConsoleCalculatorController {
 					firstToken.equals("%")) {
 						tempType = "B";															// User entered a Binary operator.
 						isValidEntry = true;
-						//View view = new View("B",firstToken,"0","0");								// Create a Binary view.
 				} else {																				
 					if (firstToken.equals("log") ||												
 						firstToken.equals("sqrt")) {
 							tempType = "U";														// User entered a Unary operator.
 							isValidEntry = true;
-							//View view = new View("U",firstToken,"0","0");							// Create a Unary view.
 					} else {										
 						if (firstToken.equals("print") || 
 							firstToken.equals("save") || 
 							firstToken.equals("recall") || 
+							firstToken.equals("help") ||
 							firstToken.equals("off")) {	
 								tempType = "C";													// User entered a Command.
 								isValidEntry = true;
-								//View view = new View("C",firstToken,"0","0");						// Create a command view.
 							} 
 						}
 					}	
@@ -199,8 +197,6 @@ public class ConsoleCalculatorController {
 			}
 
 		}//while																					// Exit while loop.
-		//System.out.println("Bye bye bye");
-		//System.out.println(tempType + firstToken);
 		View view = new View(tempType,firstToken,"0","0");										// Create a view.
 		return view;																				// Return the view.
 	} // end getUserInput
@@ -253,8 +249,6 @@ public class ConsoleCalculatorController {
 		if (isValidEntry==false) {																// If too many tries, set "E" for error.
 			tempString = "E";
 		}
-		//System.out.println("Bye bye buck");
-		//System.out.println(tempString);
 		return tempString;																		// Return the valid number or "E" for error.
 	}	//end getUserInputNumeric																// Exit getUserInputNumeric().
 		
@@ -289,6 +283,7 @@ public class ConsoleCalculatorController {
 		System.out.println("-----------------------------------------------------------------------------------------------");
 		System.out.println("  'print' to list history.");
 		System.out.println("  'save' to save to memory.");
+		System.out.println("  'help' to display this message again.");
 		System.out.println("  'recall' to recall from memory.");
 		System.out.println("  'off' to turn calculator off.");
 	}//end showInitialView
@@ -296,9 +291,9 @@ public class ConsoleCalculatorController {
 
 	/**  ***********************************************************************************************************************
 	 * showPromptView() - Displays Calculator prompt to the console as: "Console Calculator on. ".  
-	 * 					 Another line displays below with an optional message passed in, followed by " --> ".
+	 * 					 Another line displays below with an optional message passed in, followed by @code" --> ".
 	 * 													
-	 * @param: msg	a string for usage error messages or user prompts.
+	 * @param msg	a string for usage error messages or user prompts.
 	 * *************************************************************************************************************************
 	 */
 	
@@ -313,7 +308,7 @@ public class ConsoleCalculatorController {
 	 * isValidNumeric(String field) - Returns true if 'entry' is a valid numeric (+ or -), else returns false. 
 	 * 	
 	 * 										
-	 * @param: field		String field to check if user entered a valid numeric or the string 'pi'
+	 * @param field		String field to check if user entered a valid numeric or the string 'pi'
 	 * @return boolean value		indicates whether 'field' qualifies as valid numeric
 	 * *************************************************************************************************************************
 	 */
@@ -324,7 +319,6 @@ public class ConsoleCalculatorController {
 			field = String.valueOf(Math.PI);															// Reset to Math.pi here temporarily
 		}																							// Make real change in calling method
 		if (field.matches(".*\\d+.*")) {																// Check user input for numerics.
-			//System.out.println("all numerics: " + field);
 			try {
 				Double tempNumber = Double.parseDouble(field);										// Try Double.parseDouble here.
 			}
@@ -332,17 +326,15 @@ public class ConsoleCalculatorController {
 				(NumberFormatException e)															// Catch Number Format Exception.
 			{
 				System.out.println("Incorrect input, please enter an integer.");
-		         return false;																		// return false, non-numeric.
+		         return false;																		// Return false, non-numeric.
 			}
 			
-			return true;																				// return true, valid number found.
+			return true;																				// Return true, valid number found.
 		} else {
 			System.out.println("ConsoleCalculatorController.isValidNumeric: non numeric found: " + field);
-			return false;																			// return false, non-numeric.
+			return false;																			// Return false, non-numeric.
 		}
-	} // end isValidNumeric																			// end method 					
+	} // end isValidNumeric																			// End method. 					
 	
-	
-	
-} //end ConsoleCalculatorController Class																// Exit Class
+} //end ConsoleCalculatorController Class																// Exit Class.
 
