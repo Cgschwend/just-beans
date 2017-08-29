@@ -26,7 +26,7 @@ This simple console calculator provides basic functionality.  The user may enter
 
 * 'print'  to display a list of all calculator computations and commands made in the current calculator session
 
-* 'help' to display calculator usage message.
+* 'help' to display calculator usage message
 
 * 'off'  to power the calculator off.  Resets all calculator session memory by ending the current calculator session
 
